@@ -1,12 +1,20 @@
 package models
 
-import "go_cadastro/dbcon"
+import (
+	"go_cadastro/dbcon"
+)
 
 type Produto struct {
-	id              int
+	Id              int
 	Nome, Descricao string
 	Preco           float64
 	Quantidade      int
+}
+
+func DeletaProduto() {
+	db := dbcon.ConectaBD()
+	deletarProduto := db.Prepare("delete from produtos ")
+	defer db.Close()
 }
 
 func BuscaTodosOsProdutos() []Produto {
@@ -28,6 +36,7 @@ func BuscaTodosOsProdutos() []Produto {
 		if err != nil {
 			panic(err.Error())
 		}
+		p.Id = id
 		p.Nome = nome
 		p.Descricao = descricao
 		p.Preco = preco
@@ -38,4 +47,14 @@ func BuscaTodosOsProdutos() []Produto {
 	}
 	defer db.Close()
 	return produtos
+}
+
+func CriarNovoProduto(nome, descricao string, preco float64, quantidade int) {
+	db := dbcon.ConectaBD()
+	insereDadosNoBanco, err := db.Prepare("insert into produtos(nome, descricao,preco,quantidade) values($1, $2, $3, $4)")
+	if err != nil {
+		panic(err.Error())
+	}
+	insereDadosNoBanco.Exec(nome, descricao, preco, quantidade)
+	defer db.Close()
 }
