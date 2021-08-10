@@ -10,7 +10,8 @@
                 <p class="lead">Insira os dados</p>
             </div>
         </div>
-        <form method="POST" action="insert">
+        <form method="POST" action="update">
+            <input type="hidden" name="id" value="{{.Id}}">
             <div class="row">
                 <div class="col-sm-8">
                     <div class="form-group">
@@ -23,7 +24,7 @@
                 <div class="col-sm-8">
                     <div class="form-group">
                         <label for="descricao">Descrição:</label>
-                        <input type="text" name="descricao" class="form-control" value="{{.Descricao}}>
+                        <input type="text" name="descricao" class="form-control" value="{{.Descricao}}">
                     </div>
                 </div>
             </div>
@@ -31,7 +32,7 @@
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="preco">Preço:</label>
-                        <input type="number" name="preco" class="form-control" step="0.01" value="{{.Preco}}>
+                        <input type="number" name="preco" class="form-control" step="0.01" value="{{.Preco}}">
                     </div>
                 </div>
             </div>
@@ -40,7 +41,7 @@
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="quantidade">Quantidade:</label>
-                        <input type="number" name="quantidade" class="form-control" value="{{.Quantidade}}>
+                        <input type="number" name="quantidade" class="form-control" value="{{.Quantidade}}">
                     </div>
                 </div>
             </div>

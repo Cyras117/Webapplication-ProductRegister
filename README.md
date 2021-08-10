@@ -6,4 +6,5 @@ Used on this project:
 ->Docker
 ->Postgres
 ->Html5
+->Js
 ->Bootstrap
