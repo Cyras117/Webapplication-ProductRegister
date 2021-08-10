@@ -11,9 +11,13 @@ type Produto struct {
 	Quantidade      int
 }
 
-func DeletaProduto() {
+func DeletaProduto(id string) {
 	db := dbcon.ConectaBD()
-	deletarProduto := db.Prepare("delete from produtos ")
+	deletarProduto, err := db.Prepare("delete from produtos where id=$1")
+	if err != nil {
+		panic(err.Error())
+	}
+	deletarProduto.Exec(id)
 	defer db.Close()
 }
 
@@ -47,6 +51,31 @@ func BuscaTodosOsProdutos() []Produto {
 	}
 	defer db.Close()
 	return produtos
+}
+func EditaProduto(id string) Produto {
+	db := dbcon.ConectaBD()
+	produtoDoBanco, err := db.Query("select * from produtos where id = $1", id)
+	if err != nil {
+		panic(err.Error())
+	}
+	produtoParaAtualizar := Produto{}
+
+	for produtoDoBanco.Next() {
+		var id, quantidade int
+		var nome, descricao string
+		var preco float64
+
+		err = produtoDoBanco.Scan(&id, &nome, &descricao, &quantidade, &preco)
+		if err != nil {
+			panic(err.Error())
+		}
+		produtoParaAtualizar.Nome = nome
+		produtoParaAtualizar.Descricao = descricao
+		produtoParaAtualizar.Preco = preco
+		produtoParaAtualizar.Quantidade = quantidade
+	}
+	defer db.Close()
+	return produtoParaAtualizar
 }
 
 func CriarNovoProduto(nome, descricao string, preco float64, quantidade int) {
