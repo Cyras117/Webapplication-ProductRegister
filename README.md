@@ -8,3 +8,7 @@ Used on this project:
 ->Html5
 ->Js
 ->Bootstrap
+
+How to setup:
+1- Set up the variables to connect to a database on config file
+2- go run main.go

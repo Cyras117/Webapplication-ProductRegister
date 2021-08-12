@@ -1,0 +1,7 @@
+{
+    "user":"postgres_user", 
+    "dbname":"database_name", 
+    "password":"postgres_password", 
+    "host":"host", 
+    "sslmode":"disable"
+}
